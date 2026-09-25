@@ -54,7 +54,8 @@ Il PRD cambierà durante l'anno. Ogni modifica va registrata qui, con la sua rag
 
 ### Cosa è incluso
 
-- _Esempio: gestione di classi, docenti e studenti da parte del Direttore_
+- Registrazione e login/logout
+- Gestione di classi, docenti e studenti da parte del Direttore
 - _…_
 
 ### Cosa non è incluso
@@ -73,14 +74,14 @@ La lista di cosa **non** è incluso è la più preziosa del documento. Ogni riga
 
 ## Stakeholder
 
-| Stakeholder                 | Cosa fa                             | Cosa gli interessa | Come lo coinvolgete     |
-| --------------------------- | ----------------------------------- | ------------------ | ----------------------- |
-| Direttore                   | _…_                                 | _…_                | _…_                     |
-| Docenti                     | _…_                                 | _…_                | _…_                     |
-| Studenti                    | _…_                                 | _…_                | _…_                     |
-| Docente del corso           | Valida il PRD                       | _…_                | Presentazione e domande |
-| Collaudatori del primo anno | Usano ScuolaChill come utenti reali | _…_                | _Intervista, collaudo_  |
-| _Altri?_                    |                                     |                    |                         |
+| Stakeholder                 | Cosa fa                                                                   | Cosa gli interessa                                          | Come lo coinvolgete                   |
+| --------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------- |
+| Direttore                   | Dirige la scuola, crea account e classi, ha visione d'insieme             | Poco tempo, vuole vedere tutto senza entrare in ogni pagina | Intervista + collaudo finale          |
+| Docenti                     | Insegna una o più materie, carica materiale, crea verifiche, assegna voti | Fare le operazioni quotidiane senza attrito                 | Collaudo con un docente reale         |
+| Studenti                    | Consulta materiale, svolge verifiche, controlla i voti                    | Trovare tutto in un posto, non perdere voti                 | Collaudo con i ragazzi del primo anno |
+| Docente del corso           | Valida il PRD                                                             | Che le scelte siano motivate e coerenti fra loro            | Presentazione e domande               |
+| Collaudatori del primo anno | Usano ScuolaChill come utenti reali                                       | Che sia semplice da usare, anche da smartphone              | _Intervista, collaudo_                |
+| _Altri?_                    |                                                                           |                                                             |                                       |
 
 <aside>
 💡
@@ -93,15 +94,15 @@ Gli stakeholder non sono solo gli utenti. Sono anche chi approva, chi paga, chi 
 
 ## Destinatari e contesto d'uso
 
-### La scuola che avete immaginato
+### La scuola che avete immaginato1
 
 _Descrivi la scuola per cui progettate. Che tipo di istituto è, dove si trova, come si organizza la giornata. Questi dati tornano nella stima del carico, quindi scegli numeri che poi userai davvero._
 
 |                    | Valore                                                          |
 | ------------------ | --------------------------------------------------------------- |
-| Numero di studenti | _…_                                                             |
-| Numero di docenti  | _…_                                                             |
-| Numero di classi   | _…_                                                             |
+| Numero di studenti | 900                                                             |
+| Numero di docenti  | 40                                                              |
+| Numero di classi   | 36                                                              |
 | Orario scolastico  | _es. 8:00 – 14:00, dal lunedì al venerdì_                       |
 | Connettività       | _es. Wi-Fi scolastico condiviso, rete mobile degli studenti, …_ |
 
@@ -109,11 +110,11 @@ _Descrivi la scuola per cui progettate. Che tipo di istituto è, dove si trova, 
 
 Arricchisci gli archetipi della traccia.
 
-| ID      | Archetipo | Contesto d'uso | Competenze digitali | Dispositivo principale | Frequenza d'uso |
-| ------- | --------- | -------------- | ------------------- | ---------------------- | --------------- |
-| ARC-001 | Direttore | _…_            | _…_                 | _…_                    | _…_             |
-| ARC-002 | Docente   | _…_            | _…_                 | _…_                    | _…_             |
-| ARC-003 | Studente  | _…_            | _…_                 | _…_                    | _…_             |
+| ID      | Archetipo | Contesto d'uso                                                      | Competenze digitali                                                                | Dispositivo principale       | Frequenza d'uso                                                                                                               |
+| ------- | --------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| ARC-001 | Direttore | Ufficio, tempo limitato                                             | Medie, abituato a usare il PC per lavoro, vuole comunque viste rapide e sintetiche | PC                           | Più volte a settimana, con picchi a inizio anno (creazione classi) e sessioni più brevi per avere una panoramica della scuola |
+| ARC-002 | Docente   | In classe o a casa                                                  | Variabili, sopratutto in base all'età                                              | PC (principale) e smartphone | Più volte a settimana, con picchi dopo ogni verifica (assegnazione voti)                                                      |
+| ARC-003 | Studente  | A scuola fra le lezioni, durante l'intervallo o a casa per studiare | Alte, sopratutto per quanto riguarda lo smartphone                                 | PC e smartphone (principale) | giornaliera, uso sia breve (vedere voti), che lungo (vedere materiale scolastico)                                             |
 
 <aside>
 💡
@@ -132,9 +133,21 @@ _Racconta ScuolaChill come lo spiegheresti al Direttore in un minuto. Niente ter
 
 ### User flow e scenari
 
-Per ogni ruolo, scegli **almeno tre** storie principali e descrivi il percorso completo.
+## Direttore (ARC-001)
 
-**Storia:** _es. STU-02 · Svolgere una verifica_
+**DIR-01 — Creare account docente:** Come Direttore voglio creare gli account dei docenti così da dare al personale l'accesso al sistema con il ruolo corretto.
+
+**User flow**
+
+1. Il direttore accede a Scuola Chill
+2. Apre la sezione "crea account"
+3. _…_
+
+**Scenario principale.** _Racconta il caso in cui tutto va bene, con un personaggio e una situazione concreta._
+
+**Scenari alternativi.** _Cosa succede quando qualcosa va storto? Connessione che cade, scadenza superata, doppia scheda aperta…_
+
+**DIR-02 — Creare account studente:** Come Direttore voglio creare gli account degli studenti così da permettere a ogni iscritto di usare l'applicazione.
 
 **User flow**
 
@@ -146,7 +159,29 @@ Per ogni ruolo, scegli **almeno tre** storie principali e descrivi il percorso c
 
 **Scenari alternativi.** _Cosa succede quando qualcosa va storto? Connessione che cade, scadenza superata, doppia scheda aperta…_
 
-_Ripeti il blocco per le storie principali di Direttore e Docente._
+**DIR-03 — Creare classi e comporle:** Come Direttore voglio creare le classi e assegnarvi studenti e docenti con le rispettive materie così da riprodurre l'organizzazione reale della scuola.
+
+**User flow**
+
+1. _Lo studente accede a ScuolaChill_
+2. _Apre la sezione Verifiche_
+3. _…_
+
+**Scenario principale.** _Racconta il caso in cui tutto va bene, con un personaggio e una situazione concreta._
+
+**Scenari alternativi.** _Cosa succede quando qualcosa va storto? Connessione che cade, scadenza superata, doppia scheda aperta…_
+
+**DIR-04 — Vedere tutto:** Come Direttore voglio una vista complessiva su classi, docenti, studenti e voti così da monitorare l'andamento della scuola senza entrare in ogni singola pagina.
+
+**User flow**
+
+1. _Lo studente accede a ScuolaChill_
+2. _Apre la sezione Verifiche_
+3. _…_
+
+**Scenario principale.** _Racconta il caso in cui tutto va bene, con un personaggio e una situazione concreta._
+
+**Scenari alternativi.** _Cosa succede quando qualcosa va storto? Connessione che cade, scadenza superata, doppia scheda aperta…_
 
 ---
 
