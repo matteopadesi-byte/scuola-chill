@@ -1,20 +1,5 @@
 # PRD di ScuolaChill · Matteo Padesi
 
-<aside>
-💡
-
-**Come usare questo template**
-
-Duplica questa pagina e compilala con il tuo team. Dove trovi del testo in _corsivo_, sostituiscilo con il vostro. I callout 💡 sono consigli per te: cancellali prima della consegna da questo markdown.
-
-Il documento ha due parti. Nella prima scrivi **cosa** fa ScuolaChill, nella seconda **come** lo costruirai. Tienile separate. Chi legge la prima parte deve capire tutto senza sapere cos'è Spring Boot.
-
-Un buon PRD sta fra le 15 e le 25 pagine. Se ne scrivi di più, probabilmente stai descrivendo invece di decidere.
-
-</aside>
-
----
-
 ## Informazioni sul documento
 
 |              |                                      |
@@ -31,13 +16,6 @@ Un buon PRD sta fra le 15 e le 25 pagine. Se ne scrivi di più, probabilmente st
 | Versione | Data       | Autore        | Cosa è cambiato e perché |
 | -------- | ---------- | ------------- | ------------------------ |
 | 1.0      | 23/09/2026 | Matteo Padesi | Prima stesura            |
-
-<aside>
-💡
-
-Il PRD cambierà durante l'anno. Ogni modifica va registrata qui, con la sua ragione. Un PRD che dice una cosa mentre il codice ne fa un'altra è peggio di nessun PRD.
-
-</aside>
 
 ---
 
@@ -72,13 +50,6 @@ Il PRD cambierà durante l'anno. Ogni modifica va registrata qui, con la sua rag
 - **Orario delle lezioni e calendario.**
 - **Rette e pagamenti.**
 
-<aside>
-💡
-
-La lista di cosa **non** è incluso è la più preziosa del documento. Ogni riga qui ti evita una settimana di discussioni più avanti.
-
-</aside>
-
 ---
 
 ## Stakeholder
@@ -91,13 +62,6 @@ La lista di cosa **non** è incluso è la più preziosa del documento. Ogni riga
 | Docente del corso           | Valida il PRD                                                             | Che le scelte siano motivate e coerenti fra loro            | Presentazione e domande               |
 | Collaudatori del primo anno | Usano ScuolaChill come utenti reali                                       | Che sia semplice da usare, anche da smartphone              | _Intervista, collaudo_                |
 | _Altri?_                    |                                                                           |                                                             |                                       |
-
-<aside>
-💡
-
-Gli stakeholder non sono solo gli utenti. Sono anche chi approva, chi paga, chi manterrà il sistema. Chiediti chi resterebbe deluso se ScuolaChill non funzionasse.
-
-</aside>
 
 ---
 
@@ -130,13 +94,6 @@ Arricchisci gli archetipi della traccia.
 | ARC-002 | Docente   | In classe o a casa                                                  | Variabili, sopratutto in base all'età                                              | PC (principale) e smartphone | Più volte a settimana, con picchi dopo ogni verifica (assegnazione voti)                                                      |
 | ARC-003 | Studente  | A scuola fra le lezioni, durante l'intervallo o a casa per studiare | Alte, sopratutto per quanto riguarda lo smartphone                                 | PC e smartphone (principale) | giornaliera, uso sia breve (vedere voti), che lungo (vedere materiale scolastico)                                             |
 
-<aside>
-💡
-
-I collaudatori veri sono i ragazzi del primo anno. Usano lo smartphone in corridoio o il PC in laboratorio? La risposta cambia l'interfaccia, i requisiti di usabilità e perfino il dimensionamento.
-
-</aside>
-
 ---
 
 ## Panoramica e casi d'uso
@@ -156,13 +113,18 @@ ScuolaChill è il posto unico in cui la scuola gestisce materiale, verifiche e v
 1. Il direttore accede a Scuola Chill
 2. Apre la sezione "crea account"
 3. Sceglie "docente"
-4. Inserisce nome, cognome, data di nascita, email, materie insegnate e le classi in cui insegna (opzionale, viene segnalato in seguito per ricordare di aggiungere il dato). È la stessa assegnazione che si fa componendo una classe (DIR-03): farla da una parte la rende visibile anche dall'altra
+4. Scrive nome, cognome, data di nascita ed email. Poi sceglie da un elenco le materie che il docente insegna (sono le materie della scuola, vedi DIR-03) e, se sono già decise, le classi in cui le insegna. Le classi sono opzionali: se mancano, il sistema lo ricorda al Direttore più avanti. È la stessa assegnazione che si fa componendo una classe (DIR-03): farla da una parte la rende visibile anche dall'altra
 5. Se un campo è vuoto o non valido, il sistema lo evidenzia e non crea l'account; altrimenti crea l'account con ruolo Docente e lo aggiunge all'elenco dei docenti
 6. Al docente arriva una mail con un link per accedere alla piattaforma e le credenziali di primo accesso, con una password temporanea (se la mail non parte vale FR-EST-01)
 
 **Scenario principale.** A scuola arriva un nuovo docente di matematica. Il direttore crea un nuovo account docente inserendo i suoi dati, mette "matematica" come materia e salta la sezione riguardante le classi per farla in seguito non appena sarà deciso in che classe farlo insegnare. Una volta conclusa la creazione del nuovo account, al nuovo docente arriva una mail con link e credenziali del suo account. Il nuovo docente apre il link che lo porta direttamente nella schermata di accesso e inserisce le credenziali scritte nella mail. ScuolaChill gli chiede subito di sostituire la password temporanea con una sua; fatto questo, accede al suo account personale.
 
-**Scenari alternativi.** _Cosa succede quando qualcosa va storto? Connessione che cade, scadenza superata, doppia scheda aperta…_
+**Scenari alternativi.**
+
+- **Email già usata.** Il Direttore inserisce un'email che appartiene già a un altro utente: il sistema lo segnala e non crea nessun account (AC-02).
+- **Dati mancanti o sbagliati.** Il Direttore dimentica il cognome o scrive un'email non valida: il sistema evidenzia il campo da correggere e non crea l'account.
+- **L'email non parte.** Il servizio che invia le email non risponde: l'account viene creato lo stesso e il sistema riprova da solo. Se non ci riesce, il Direttore vede "email non consegnata" e può reinviarla o consegnare le credenziali di persona (FR-EST-01).
+- **Utente senza permesso.** Un docente o uno studente prova a creare un account, anche senza passare dalle pagine dell'app: l'operazione viene negata (AC-03).
 
 **DIR-02 — Creare account studente:** Come Direttore voglio creare gli account degli studenti così da permettere a ogni iscritto di usare l'applicazione.
 
@@ -171,29 +133,43 @@ ScuolaChill è il posto unico in cui la scuola gestisce materiale, verifiche e v
 1. Il Direttore accede a ScuolaChill
 2. Apre la sezione "crea account"
 3. Sceglie "studente"
-4. Inserisce nome, cognome, data di nascita, email e classe (opzionale, viene segnalato in seguito per ricordare di aggiungere il dato). Scegliere qui la classe equivale ad aggiungere lo studente alla classe in DIR-03, con le stesse regole (FR-CLA-01)
+4. Scrive nome, cognome, data di nascita ed email e, se è già decisa, sceglie la classe da un menu con le classi dell'anno in corso. La classe è opzionale: se manca, il sistema lo ricorda al Direttore più avanti. Scegliere qui la classe equivale ad aggiungere lo studente alla classe in DIR-03, con le stesse regole (FR-CLA-01)
 5. Se un campo è vuoto o non valido, il sistema lo evidenzia e non crea l'account; altrimenti crea l'account con ruolo Studente e lo aggiunge all'elenco degli studenti
 6. Allo studente arriva una mail con un link per accedere alla piattaforma e le credenziali di primo accesso, con una password temporanea (se la mail non parte vale FR-EST-01)
 
 **Scenario principale.** A scuola si iscrive un nuovo studente. Il direttore crea un nuovo account studente inserendo i suoi dati, salta la sezione riguardante la classe e la aggiungerà in seguito non appena avrà deciso in che classe inserirlo. Una volta conclusa la creazione del nuovo account, al nuovo studente arriva una mail con link e credenziali del suo account. Il nuovo studente apre il link che lo porta direttamente nella schermata di accesso e inserisce le credenziali scritte nella mail. ScuolaChill gli chiede subito di sostituire la password temporanea con una sua; fatto questo, accede al suo account personale.
 
-**Scenari alternativi.** _Cosa succede quando qualcosa va storto? Connessione che cade, scadenza superata, doppia scheda aperta…_
+**Scenari alternativi.**
+
+- **Dati incompleti.** Il Direttore conferma senza la data di nascita e con un'email scritta male: il sistema indica esattamente quali campi correggere e non crea l'account (AC-02).
+- **Email già usata.** L'email appartiene già a un altro utente: il sistema lo segnala e non crea l'account.
+- **L'email non parte.** A settembre il Direttore crea gli account di tutte le prime, ma il servizio delle email ha un guasto: gli account vengono creati lo stesso, e per quelli rimasti senza email il Direttore può reinviarla più tardi o consegnare le credenziali di persona (FR-EST-01).
+- **Utente senza permesso.** Un docente o uno studente prova a creare uno studente: l'operazione viene negata (AC-03).
 
 **DIR-03 — Creare classi e comporle:** Come Direttore voglio creare le classi e assegnarvi studenti e docenti con le rispettive materie così da riprodurre l'organizzazione reale della scuola.
 
 **User flow**
 
 1. Il Direttore accede a ScuolaChill
-2. Apre la sezione "Classi" e sceglie "Nuova classe"
-3. Inserisce il nome della classe (es. 1A) e l'anno scolastico; nello stesso anno scolastico non possono esistere due classi con lo stesso nome
-4. Aggiunge gli studenti scegliendoli dall'elenco
-5. Per ogni materia, sceglie il docente che la insegna in quella classe (opzionale, si può fare anche in seguito). È la stessa assegnazione che si può fare creando l'account del docente (DIR-01)
-6. Conferma; la classe compare nell'elenco con il numero di studenti
-7. Se uno studente è già in un'altra classe, il sistema lo segnala e propone il trasferimento (vedi FR-CLA-01)
+2. Apre la sezione "Classi" e preme "Nuova classe"
+3. Sceglie l'anno di corso (1ª, 2ª, 3ª o 4ª) e scrive la sezione (es. A). Il nome della classe (es. 1A) si compone da solo. L'anno scolastico non si inserisce: la classe appartiene sempre all'anno scolastico in corso (FR-ANN-01). Nello stesso anno scolastico non possono esistere due classi con lo stesso nome
+4. Nella pagina della classe preme "Aggiungi studenti": si apre l'elenco degli studenti, che può cercare per nome o cognome e filtrare per vedere solo quelli ancora senza classe. Spunta gli studenti da aggiungere e preme "Aggiungi"
+5. Preme "Aggiungi materia" e sceglie una materia dall'elenco delle materie della scuola. Accanto alla materia sceglie il docente da un menu che mostra solo i docenti che la insegnano (opzionale: si può fare anche dopo). È la stessa assegnazione che si può fare creando l'account del docente (DIR-01)
+6. Se la materia è facoltativa (es. religione), la segna come tale e spunta gli studenti che la seguono (FR-MAT-01)
+7. Preme "Salva"; la classe compare nell'elenco con il numero di studenti
+8. Se uno studente è già in un'altra classe, il sistema lo segnala e propone il trasferimento (FR-CLA-01)
 
-**Scenario principale.** _Racconta il caso in cui tutto va bene, con un personaggio e una situazione concreta._
+**Le materie della scuola.** L'elenco delle materie (es. italiano, elettrotecnica, religione) lo crea il Direttore una volta sola, nella sezione "Materie": per ognuna scrive il nome e sceglie se si valuta con voto o con giudizio (FR-VOT-02). Lo stesso elenco si usa qui e nella creazione degli account dei docenti (DIR-01).
 
-**Scenari alternativi.** _Cosa succede quando qualcosa va storto? Connessione che cade, scadenza superata, doppia scheda aperta…_
+**Scenario principale.** A settembre il Direttore deve creare le classi prime. Le altre classi sono già pronte, perché il passaggio al nuovo anno (FR-ANN-01) le ha create partendo da quelle dell'anno prima. Preme "Nuova classe", sceglie 1ª e scrive la sezione A. Con "Aggiungi studenti" filtra gli studenti ancora senza classe e spunta i 25 nuovi iscritti. Con "Aggiungi materia" inserisce le materie della prima e accanto a ognuna sceglie il docente, saltando quelle per cui non sa ancora chi insegnerà: ScuolaChill gliele ricorderà più avanti. Preme "Salva", e la 1A compare nell'elenco delle classi con 25 studenti.
+
+**Scenari alternativi.**
+
+- **Nome già usato.** Esiste già una 1A nello stesso anno scolastico: il sistema lo segnala e non crea la classe.
+- **Studente già in un'altra classe.** Il Direttore aggiunge alla 1A uno studente che è già in 1B: il sistema glielo segnala e propone il trasferimento, che va confermato (FR-CLA-01).
+- **Materie senza docente.** La classe viene creata lo stesso; finché manca un docente, ScuolaChill lo ricorda al Direttore.
+- **Materia facoltativa.** Per religione il Direttore indica solo gli studenti che la seguono; gli altri non la vedranno (FR-MAT-01).
+- **Utente senza permesso.** Un docente prova a creare una classe o a spostare uno studente: l'operazione viene negata.
 
 **DIR-04 — Vedere tutto:** Come Direttore voglio una vista complessiva su classi, docenti, studenti e voti così da monitorare l'andamento della scuola senza entrare in ogni singola pagina.
 
@@ -204,9 +180,14 @@ ScuolaChill è il posto unico in cui la scuola gestisce materiale, verifiche e v
 3. Vede in una sola pagina: le classi con il numero di studenti, i docenti con le loro materie, l'andamento dei voti (medie per classe e per materia, FR-VOT-03)
 4. Se vuole i dettagli, apre un elenco completo, diviso in pagine
 
-**Scenario principale.** _Racconta il caso in cui tutto va bene, con un personaggio e una situazione concreta._
+**Scenario principale.** Il Direttore ha dieci minuti prima di una riunione con i docenti. Dal PC dell'ufficio apre la Panoramica e in una sola pagina vede le 36 classi con il numero di studenti, i 40 docenti con le loro materie e le medie per classe e per materia. Nota che in matematica la media della 2B è più bassa di quella delle altre seconde, apre il dettaglio della classe e arriva alla riunione con il dato già pronto.
 
-**Scenari alternativi.** _Cosa succede quando qualcosa va storto? Connessione che cade, scadenza superata, doppia scheda aperta…_
+**Scenari alternativi.**
+
+- **Elenco lungo.** L'elenco dei 900 studenti è diviso in pagine, e il Direttore le scorre una alla volta (AC-02).
+- **Classe ancora senza voti.** A inizio anno la 1A non ha voti: la media non compare, invece di mostrare "0" (FR-VOT-03).
+- **Materie con giudizio.** Religione e attività alternativa compaiono a parte, senza media (FR-VOT-02).
+- **Utente senza permesso.** Un docente o uno studente prova ad aprire la Panoramica: l'operazione viene negata (AC-03).
 
 #### Docente (ARC-002)
 
@@ -221,9 +202,13 @@ ScuolaChill è il posto unico in cui la scuola gestisce materiale, verifiche e v
 5. Conferma
 6. Il materiale compare nell'elenco della materia, visibile agli studenti di quella classe
 
-**Scenario principale.** _Racconta il caso in cui tutto va bene, con un personaggio e una situazione concreta._
+**Scenario principale.** La prof.ssa Bianchi insegna elettrotecnica in 3A e 3B. Dopo la lezione in laboratorio, dal suo portatile apre la 3A, sceglie elettrotecnica e carica il PDF delle slide con il titolo "Circuiti in serie e in parallelo". Gli studenti della 3A lo trovano subito nell'elenco della materia; quelli della 3B no, perché il materiale è stato caricato solo per la 3A.
 
-**Scenari alternativi.** _Cosa succede quando qualcosa va storto?_
+**Scenari alternativi.**
+
+- **Classe non sua.** La prof.ssa Bianchi non insegna in 3C, quindi la 3C non compare fra le sue classi. Se prova ad accedervi in un altro modo, l'operazione viene negata (AC-02).
+- **Materiale di un collega.** Prova a modificare o eliminare un file caricato da un collega: l'operazione viene negata, perché può farlo solo sui propri materiali (AC-03).
+- **Connessione che cade durante il caricamento.** Il materiale non compare finché il file non è arrivato per intero: la docente vede l'errore e riprova.
 
 **DOC-02 — Creare le proprie verifiche:** Come Docente voglio creare verifiche per le mie classi così da valutare gli studenti sulle mie materie.
 
@@ -237,9 +222,15 @@ ScuolaChill è il posto unico in cui la scuola gestisce materiale, verifiche e v
 6. Salva
 7. La verifica compare fra quelle della classe: gli studenti ne vedono titolo e orari, ma possono aprire il file solo dall'apertura alla chiusura
 
-**Scenario principale.** _…_
+**Scenario principale.** Il prof. Verdi vuole fare una verifica di italiano alla 2B giovedì alle 9:00. Lunedì carica il PDF con le domande, lo segna come verifica, imposta l'apertura giovedì alle 9:00 e la chiusura alle 10:00 e sceglie "con consegna": gli studenti scriveranno sul foglio e caricheranno la foto. Salva, e ScuolaChill gli ricorda che da giovedì alle 9:00 il file non sarà più modificabile. Fino all'apertura gli studenti vedono solo titolo e orari.
 
-**Scenari alternativi.** _Cosa succede quando il docente prova a modificare una verifica già aperta (regola in FR-VER-03)._
+**Scenari alternativi.**
+
+- **Errore scoperto prima dell'apertura.** Mercoledì il prof. Verdi trova un errore nel testo: sostituisce il file, e il sistema lo permette perché la verifica non è ancora aperta (AC-02, FR-VER-03).
+- **Errore scoperto dopo l'apertura.** Giovedì alle 9:10 il file non si può più cambiare. Il docente può spostare la chiusura per dare più tempo; se nessuno ha ancora consegnato e non ci sono voti, può eliminare la verifica e crearne una nuova (FR-VER-03).
+- **Orari sbagliati.** Il docente imposta una chiusura precedente all'apertura: il sistema lo segnala e non salva.
+- **Prova di laboratorio.** Il docente di meccanica sceglie "senza consegna": la prova si svolge in officina, e ScuolaChill serve per il testo e per i voti (FR-VER-01).
+- **Verifica di un collega.** Il prof. Verdi prova a modificare una verifica di un altro docente: l'operazione viene negata (AC-03).
 
 **DOC-03 — Assegnare i voti:** Come Docente voglio assegnare i voti delle mie verifiche così da registrare formalmente la valutazione di ogni studente.
 
@@ -248,12 +239,18 @@ ScuolaChill è il posto unico in cui la scuola gestisce materiale, verifiche e v
 1. Il Docente accede a ScuolaChill
 2. Apre una sua verifica
 3. Vede l'elenco degli studenti della classe che seguono la materia (FR-MAT-01); se la verifica prevede la consegna, per ciascuno vede se ha consegnato e può aprire il suo elaborato
-4. Inserisce il voto di ogni studente (es. 6½ o 7−, scala in FR-VOT-01), oppure il giudizio nelle materie che lo prevedono (FR-VOT-02)
+4. Accanto al nome di ogni studente scrive il voto (es. 6½ o 7−, scala in FR-VOT-01); nelle materie con giudizio sceglie invece il giudizio da un menu (FR-VOT-02)
 5. Salva: il voto diventa visibile allo studente
 
-**Scenario principale.** _…_
+**Scenario principale.** Venerdì il prof. Verdi apre la verifica di italiano della 2B. Vede l'elenco degli studenti e, per ciascuno, se ha consegnato. Apre le foto degli elaborati una alla volta e inserisce i voti: 7−, 6½, 8. Salva, e ogni studente vede subito il proprio voto e la media di italiano aggiornata.
 
-**Scenari alternativi.** _…_
+**Scenari alternativi.**
+
+- **Voto fuori scala.** Il docente scrive "11" o "10+": il sistema mostra un errore e non registra il voto (AC-02, FR-VOT-01).
+- **Voto sbagliato.** Il docente ha scritto 5 invece di 6: lo corregge, e la media dello studente si aggiorna (FR-VOT-03).
+- **Studente assente.** Luca era assente e non ha consegnato: il docente lascia vuoto il suo voto e riapre la verifica solo per lui (FR-VER-02).
+- **Materia con giudizio.** In religione il docente sceglie un giudizio dall'elenco, per esempio "buono", invece di un voto (FR-VOT-02).
+- **Verifica di un collega.** Il docente prova ad assegnare voti in una verifica di un altro docente: l'operazione viene negata (AC-03).
 
 #### Studente (ARC-003)
 
@@ -266,9 +263,13 @@ ScuolaChill è il posto unico in cui la scuola gestisce materiale, verifiche e v
 3. Vede l'elenco del materiale caricato dal docente
 4. Apre o scarica il materiale che gli serve
 
-**Scenario principale.** _…_
+**Scenario principale.** Luca è in 3A. La sera prima dell'interrogazione apre ScuolaChill dal telefono, va in Materie, sceglie elettrotecnica e trova le slide "Circuiti in serie e in parallelo" caricate in giornata dalla prof.ssa Bianchi. Le apre e ripassa.
 
-**Scenari alternativi.** _…_
+**Scenari alternativi.**
+
+- **Materiale di un'altra classe.** Un amico della 3B manda a Luca il link a un file della 3B: aprendolo, l'accesso viene negato (AC-02).
+- **Materia facoltativa che non segue.** Luca non fa religione: la materia non compare fra le sue, e non ne vede il materiale (FR-MAT-01).
+- **Nessun materiale.** In una materia il docente non ha ancora caricato nulla: Luca vede un elenco vuoto con il messaggio "Nessun materiale".
 
 **STU-02 — Svolgere una verifica:** Come Studente voglio svolgere le verifiche assegnate alla mia classe così da essere valutato sulle materie che seguo.
 
@@ -280,9 +281,15 @@ ScuolaChill è il posto unico in cui la scuola gestisce materiale, verifiche e v
 4. Se la verifica prevede la consegna, carica il suo elaborato (un documento o la foto del foglio) prima della chiusura
 5. Il sistema conferma che la consegna è avvenuta; da quel momento non può più consegnare di nuovo
 
-**Scenario principale.** _…_
+**Scenario principale.** Giulia è in 2B. Giovedì alle 9:00 la verifica di italiano si apre: dal telefono apre il file con le domande e risponde sul foglio. Alle 9:50 fotografa il foglio, carica la foto e vede la conferma "Consegna avvenuta". Da quel momento non può più consegnare di nuovo.
 
-**Scenari alternativi.** _Cosa succede quando la connessione cade mentre carica la consegna (regola in FR-VER-04)._
+**Scenari alternativi.**
+
+- **Prima dell'apertura.** Mercoledì Giulia vede la verifica nell'elenco, con titolo e orari, ma non può aprire il file (FR-VER-02).
+- **Connessione che cade durante il caricamento.** Il Wi-Fi si blocca mentre carica la foto: Giulia vede un errore e la consegna non risulta avvenuta. Riprova con i dati del telefono, finché la verifica è aperta (FR-VER-04).
+- **Seconda consegna.** Dopo aver consegnato si accorge di un errore e prova a consegnare di nuovo: l'operazione viene negata (AC-02).
+- **Verifica chiusa senza consegna.** Giulia non riesce a consegnare entro le 10:00: la verifica risulta "non consegnata". Avvisa il docente, che può riaprirla solo per lei (FR-VER-04).
+- **Verifica di un'altra classe.** Giulia apre il link a una verifica della 2C: l'accesso viene negato (AC-03).
 
 **STU-03 — Consultare i propri voti:** Come Studente voglio consultare i miei voti raggruppati per materia così da sapere come sto andando in ciascuna.
 
@@ -292,9 +299,14 @@ ScuolaChill è il posto unico in cui la scuola gestisce materiale, verifiche e v
 2. Apre la sezione "I miei voti"
 3. Vede i voti raggruppati per materia, ognuno con la verifica da cui proviene, e la media di ogni materia (FR-VOT-03)
 
-**Scenario principale.** _…_
+**Scenario principale.** Prima del colloquio dei genitori con i docenti, Giulia apre "I miei voti" dal telefono. In italiano vede 7− e 6½, ciascuno con la verifica da cui viene, e la media 6,63. In religione vede il giudizio "buono", senza media.
 
-**Scenari alternativi.** _…_
+**Scenari alternativi.**
+
+- **Voti di un altro studente.** Giulia prova ad aprire i voti di un compagno, per esempio modificando il link: l'accesso viene negato (AC-02).
+- **Materia senza voti.** A inizio anno una materia non ha ancora voti: la media non compare, invece di mostrare "0" (FR-VOT-03).
+- **Voto corretto dal docente.** Il docente corregge un voto sbagliato: Giulia vede il voto nuovo e la media aggiornata.
+- **Cambio di classe.** Giulia viene trasferita dalla 2B alla 2C a metà anno: i voti presi in 2B restano visibili fra i suoi (FR-CLA-01).
 
 ---
 
@@ -338,7 +350,7 @@ I punti che devi decidere almeno sono questi.
 - [x] Il fallimento del servizio esterno (per esempio l'email delle credenziali).
 - [x] Le materie che non tutti seguono, come religione.
 - [x] Il passaggio al nuovo anno scolastico.
-- [x] Il tipo di domande delle verifiche e la loro correzione.
+- [x] Che cos'è una verifica e chi la corregge.
 - [x] Dove si vedono le medie e come si calcolano.
 - [x] Cosa succede se un utente dimentica la password.
 
@@ -351,7 +363,7 @@ I punti che devi decidere almeno sono questi.
 > **Motivazione:** i cambi di classe capitano davvero (cambio di sezione o di indirizzo). I voti appartengono allo studente, non alla classe: perderli o nasconderli sarebbe un errore grave. Un'azione separata con conferma evita trasferimenti fatti per sbaglio.
 
 > **FR-VER-01 · Cos'è una verifica e come si corregge** (collegato a DOC-01, DOC-02, DOC-03, STU-02)
-> Una verifica è un materiale didattico che il docente, quando lo carica, segna come verifica per distinguerlo dal materiale normale e dai compiti. Come ogni materiale ha un titolo e un file, e appartiene a una classe e a una materia. In più ha una data e ora di apertura e una di chiusura (FR-VER-02). ScuolaChill non crea domande e non corregge nulla. Per ogni verifica il docente sceglie la modalità:
+> Una verifica è un materiale didattico che il docente, quando lo carica, segna come verifica per distinguerlo dal materiale normale. Come ogni materiale ha un titolo e un file, e appartiene a una classe e a una materia. In più ha una data e ora di apertura e una di chiusura (FR-VER-02). ScuolaChill non crea domande e non corregge nulla. Per ogni verifica il docente sceglie la modalità:
 >
 > - **con consegna**: lo studente svolge la verifica e carica il suo elaborato (un documento o la foto del foglio) prima della chiusura. Può consegnare una sola volta;
 > - **senza consegna**: la verifica si svolge fuori da ScuolaChill, su carta, in laboratorio o con uno strumento esterno come Google Moduli (il docente può scriverne il link nel file o nella descrizione). ScuolaChill serve a mettere a disposizione il testo e a registrare i voti.
@@ -409,14 +421,14 @@ I punti che devi decidere almeno sono questi.
 > **Motivazione:** lo studente capisce subito in quale materia è in difficoltà, il docente ha il quadro della classe senza fare conti a mano e il Direttore vede l'andamento della scuola. Mostrare "0" per una materia ancora senza voti la farebbe sembrare insufficiente.
 
 > **FR-ANN-01 · Passaggio al nuovo anno scolastico** (collegato a DIR-03, DIR-04, STU-03)
-> A fine anno il Direttore avvia il "Nuovo anno scolastico". Il sistema propone le classi dell'anno nuovo: ogni classe passa all'anno successivo con la stessa sezione e gli stessi studenti (es. 2A → 3A). Anche le assegnazioni dei docenti e le iscrizioni alle materie facoltative vengono proposte uguali all'anno prima. Prima di confermare, il Direttore può:
+> A fine anno il Direttore avvia il "Nuovo anno scolastico". Il sistema propone le classi dell'anno nuovo: ogni classe passa all'anno successivo con la stessa sezione e gli stessi studenti (es. 2A → 3A). Le quarte non hanno un anno successivo: vengono solo archiviate. Anche le assegnazioni dei docenti e le iscrizioni alle materie facoltative vengono proposte uguali all'anno prima. Prima di confermare, il Direttore può:
 >
 > - togliere gli studenti non ammessi e spostarli in una classe dello stesso anno (es. dalla 2A dell'anno vecchio alla 2A dell'anno nuovo);
-> - togliere gli studenti ritirati;
+> - togliere gli studenti che lasciano la scuola: i ritirati e chi si ferma alla qualifica dopo la terza;
 > - cambiare docenti e iscrizioni alle materie facoltative;
 > - creare le nuove classi prime e aggiungervi gli studenti appena iscritti.
 >
-> Finché il Direttore non conferma, l'anno in corso resta attivo e nulla cambia. Dopo la conferma, le classi dell'anno vecchio vengono archiviate: materiale, verifiche e voti restano consultabili ma non più modificabili. Lo studente ritrova i voti degli anni precedenti in una sezione separata. Gli studenti che hanno finito l'ultimo anno del percorso non possono più accedere, ma i loro voti restano conservati in archivio.
+> Finché il Direttore non conferma, l'anno in corso resta attivo e nulla cambia. Dopo la conferma, le classi dell'anno vecchio vengono archiviate: materiale, verifiche e voti restano consultabili ma non più modificabili. Lo studente ritrova i voti degli anni precedenti in una sezione separata. Gli studenti che lasciano la scuola, compresi quelli che finiscono la quarta, non possono più accedere, ma i loro voti restano conservati in archivio. Questo passaggio è anche l'unico momento in cui cambia l'anno scolastico in corso: il Direttore non lo inserisce mai a mano.
 > **Motivazione:** con 36 classi e 900 studenti, ricreare tutto da zero ogni anno sarebbe un lavoro enorme e pieno di errori. La proposta automatica riduce il lavoro del Direttore ai soli casi diversi dalla regola. Archiviare invece di rinominare le classi tiene separati i voti di anni diversi e non perde lo storico. La conferma esplicita evita di cambiare anno per sbaglio a metà anno.
 
 ---
@@ -427,7 +439,7 @@ Ogni requisito ha una soglia, una condizione e un modo per verificarlo. Ed è co
 
 | ID     | Famiglia      | Requisito                                   | Soglia e condizione                                                                                                                    | Come si verifica                                                                   | Storie collegate                                                                                     |
 | ------ | ------------- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| NFR-01 | Prestazioni   | _es. Apertura della verifica nel picco_     | _es. meno di 2 s per il 95% delle richieste, 75 utenti nello stesso minuto_                                                            | _Test di carico_                                                                   | _STU-02_                                                                                             |
+| NFR-01 | Prestazioni | Apertura della verifica nel picco | Il file della verifica inizia ad arrivare entro 2 s per il 95% delle richieste, con 300 studenti che lo aprono nello stesso minuto | Test di carico che simula 300 studenti | STU-02, DOC-02 |
 | NFR-02 | Sicurezza     | Tutto il traffico viaggia su HTTPS          | 100% delle richieste; una richiesta in HTTP viene reindirizzata su HTTPS                                                               | Chiamata a `http://` con Postman: risposta di redirect verso `https://`            | Tutte                                                                                                |
 | NFR-03 | Sicurezza     | Controllo dei ruoli nel backend             | Ogni operazione non permessa al ruolo viene negata anche chiamando l'API direttamente, senza passare dall'interfaccia                  | Collezione Postman con una chiamata per ogni ruolo non autorizzato                 | DIR-01..04 AC-03, DOC-01 AC-02, DOC-02 AC-03, DOC-03 AC-03, STU-01 AC-02, STU-02 AC-03, STU-03 AC-02 |
 | NFR-04 | Sicurezza     | Nessun segreto nel codice sorgente          | 0 password, chiavi o connection string nel repository                                                                                  | Ricerca nel repository prima di ogni consegna                                      | Tutte                                                                                                |
@@ -439,6 +451,7 @@ Ogni requisito ha una soglia, una condizione e un modo per verificarlo. Ed è co
 | NFR-10 | Usabilità     | _…_                                         | _…_                                                                                                                                    | _…_                                                                                | _…_                                                                                                  |
 | NFR-11 | Ambientale    | _…_                                         | _…_                                                                                                                                    | _…_                                                                                | _…_                                                                                                  |
 | NFR-12 | Conformità    | Dati personali ridotti al minimo            | Per ogni utente si raccolgono solo nome, cognome, data di nascita (per distinguere gli omonimi) ed email; nessun altro dato anagrafico | Revisione dei campi richiesti nella creazione degli account e nel modello dei dati | DIR-01, DIR-02                                                                                       |
+| NFR-13 | Prestazioni | Consegna della verifica nel picco | Con 300 studenti che consegnano negli ultimi 5 minuti prima della chiusura, nessuna consegna arrivata per intero viene persa, e ogni studente vede la conferma entro 5 s dalla fine del caricamento | Test di carico che simula 300 consegne di file da 3 MB | STU-02, FR-VER-04 |
 
 <aside>
 💡
@@ -472,6 +485,7 @@ Quello che date per vero senza poterlo garantire.
 | ASS-02 | L'orario è 8:00–13:00 dal lunedì al sabato, con rientri pomeridiani per i laboratori                                | I momenti di picco cambiano: la stima del carico va ricontrollata                                                                                                                          |
 | ASS-03 | Ogni studente e ogni docente ha un indirizzo email personale funzionante                                            | Le credenziali di primo accesso e il recupero della password via email non funzionano per tutti: per chi non ha email resta solo la consegna di persona da parte del Direttore (FR-EST-01) |
 | ASS-04 | Ogni studente può usare uno smartphone con un browser aggiornato, oppure un PC del laboratorio durante le verifiche | Bisogna prevedere postazioni della scuola per chi non ha un dispositivo adatto                                                                                                             |
+| ASS-05 | Nelle settimane con più verifiche (prima di Natale e a fine anno) al massimo un terzo delle classi (12 su 36) ha una verifica alla stessa ora | Il picco supera i 400 utenti: il dimensionamento va rivisto (vedi Strategia di scalabilità) |
 
 ### Vincoli
 
@@ -488,8 +502,8 @@ Le cose esterne senza cui non potete andare avanti.
 
 | ID     | Dipendenza                              | Serve entro          | Chi se ne occupa |
 | ------ | --------------------------------------- | -------------------- | ---------------- |
-| DIP-01 | _es. Account attivo sul servizio email_ | _Prima del collaudo_ | _nome_           |
-|        |                                         |                      |                  |
+| DIP-01 | Uscita di Amazon SES dalla modalità di prova, da richiedere ad AWS: senza, le email arrivano solo a indirizzi verificati a mano | Prima del collaudo | Matteo Padesi |
+| DIP-02 | Account AWS attivo, con piano gratuito o crediti sufficienti per tutta la durata del progetto | Prima del primo rilascio | Matteo Padesi |
 
 ---
 
@@ -506,21 +520,28 @@ Da qui in poi parli al tuo docente e al tuo team, non al Direttore. Ogni scelta 
 
 ### Utenti concorrenti
 
-| Situazione                      | Utenti concorrenti | Da dove viene il numero |
-| ------------------------------- | ------------------ | ----------------------- |
-| Uso normale durante la giornata | _…_                | _…_                     |
-| Picco delle 9:00 (verifiche)    | _…_                | _…_                     |
-| Fine quadrimestre (voti)        | _…_                | _…_                     |
+Per "utenti concorrenti" intendo le persone che usano ScuolaChill nello stesso intervallo di 5 minuti. La base sono 941 account: 900 studenti, 40 docenti e il Direttore (ASS-01).
+
+| Situazione | Utenti concorrenti | Da dove viene il numero |
+| --- | --- | --- |
+| Uso normale durante la giornata | ~100 | Circa il 10% degli account attivo nello stesso momento durante la mattina: studenti che consultano materiale e voti, docenti che caricano materiale |
+| Picco delle 9:00 in un giorno normale | ~175 | 3 classi da 25 studenti che aprono una verifica alla stessa ora (75), più l'uso normale (100) |
+| Picco delle 9:00 nelle settimane di verifiche (prima di Natale e a fine anno) | **~400** | In queste settimane le verifiche si concentrano: fino a un terzo delle classi (12 su 36) ha una verifica alla stessa ora (ASS-05). 12 × 25 = 300 studenti, più l'uso normale (100) |
+| Fine quadrimestre (voti) | ~270 | La sera circa il 25% degli studenti controlla i voti (225), più i 40 docenti che li inseriscono |
+
+**Il caso peggiore è il picco nelle settimane di verifiche.** 300 studenti aprono il file della verifica nello stesso minuto, e poi caricano la foto dell'elaborato negli ultimi minuti prima della chiusura. Con foto da circa 3 MB, sono circa 900 MB in pochi minuti. Il sistema va dimensionato su questo caso (NFR-01, NFR-13), non sulla media della giornata. Anche il Wi-Fi della scuola può non reggere: per questo, se il caricamento fallisce, lo studente può riprovare con i dati del telefono (FR-VER-04).
 
 ### Profilo di carico
 
-| Operazione              | Frequente? | Pesante? | Critica? | Note |
-| ----------------------- | ---------- | -------- | -------- | ---- |
-| Login                   | _…_        | _…_      | _…_      | _…_  |
-| Apertura verifica       | _…_        | _…_      | _…_      | _…_  |
-| Consegna verifica       | _…_        | _…_      | _…_      | _…_  |
-| Dashboard del Direttore | _…_        | _…_      | _…_      | _…_  |
-| Caricamento materiale   | _…_        | _…_      | _…_      | _…_  |
+| Operazione | Frequente? | Pesante? | Critica? | Note |
+| --- | --- | --- | --- | --- |
+| Login | Sì | No | Sì | Tutti passano da qui; nel picco 300 login in pochi minuti. Se non funziona, non funziona nient'altro |
+| Apertura verifica | No, ma concentrata | Media | Sì | Molti studenti scaricano lo stesso file nello stesso minuto, e deve aprirsi all'orario esatto (NFR-01) |
+| Consegna verifica | No, ma concentrata | Sì | Sì | Caricamento di foto o documenti negli ultimi minuti prima della chiusura; una consegna persa è un danno per lo studente (NFR-13, FR-VER-04) |
+| Dashboard del Direttore | No | Sì | No | Calcola medie e conteggi su tutta la scuola, ma la usa una persona sola; si può velocizzare preparando i dati in anticipo (vedi Persistenza) |
+| Caricamento materiale | Abbastanza | Sì | No | File da qualche MB, più volte al giorno; se fallisce il docente riprova |
+| Consultazione voti | Sì | No | No | L'operazione più frequente degli studenti, soprattutto a fine quadrimestre; sono letture semplici |
+| Assegnazione voti | Abbastanza | No | Sì | Un voto salvato non deve mai andare perso |
 
 <aside>
 💡
@@ -533,10 +554,10 @@ I numeri di qui devono essere coerenti con la scuola che avete immaginato e con 
 
 ## Scelte tecnologiche
 
-**I criteri.** Tutte le scelte seguono tre criteri, in quest'ordine:
+**I criteri.** Tutte le scelte seguono quattro criteri, in quest'ordine:
 
 1. **Un solo linguaggio.** Frontend e backend in JavaScript: imparo meno cose nuove e passo dall'uno all'altro senza cambiare linguaggio.
-2. **Strumenti che conosco o sto imparando** Abbiamo imparato MySQL e stiamo imparando React.
+2. **Strumenti che conosco o sto imparando.** Abbiamo imparato MySQL e stiamo imparando React.
 3. **Diffusione e documentazione.** Lavoro da solo: mi servono strumenti con tanti esempi e una comunità ampia.
 4. **Costi bassi.** Tutto deve stare nel piano gratuito o costare pochi euro al mese.
 
@@ -546,11 +567,12 @@ I numeri di qui devono essere coerenti con la scuola che avete immaginato e con 
 | Frontend                  | **React**             | Angular                   | Lo stiamo imparando (criterio 2) ed è il framework con più componenti pronti ed esempi (criterio 3). **Angular** scartato: è più complesso.                                                                                                                                                                                                                                                                                 |
 | Database                  | **MySQL**             | PostgreSQL                | Lo conosco già (criterio 2). I dati di ScuolaChill seguono regole precise (uno studente sta in una sola classe, ha al massimo un voto per verifica): un database relazionale le fa rispettare con i suoi vincoli. **PostgreSQL** scartato: è simile, ma non lo conosco.                                                                                                                                                     |
 | Provider cloud            | **AWS**               | Azure; Google Cloud       | È il provider più diffuso e più richiesto nel mondo del lavoro, con la documentazione più ampia (criterio 3). Ha un piano gratuito per i nuovi account (criterio 4, _da verificare durata e limiti_). **Azure** scartato: offre crediti agli studenti, ma il suo punto di forza è l'integrazione con .NET, che non uso. **Google Cloud** scartato: i crediti di prova scadono in pochi mesi, prima della fine del progetto. |
-| Regione                   |                       |                           |                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| Hosting dell'applicazione |                       |                           |                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| Archiviazione dei file    |                       |                           |                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| Autenticazione            |                       |                           |                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| Servizio esterno          |                       |                           |                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Regione | **eu-central-1 (Francoforte)** | eu-south-1 (Milano) | I dati riguardano in gran parte minorenni e devono restare nell'Unione Europea, come chiede il GDPR: Francoforte lo garantisce. È una delle regioni AWS con tutti i servizi disponibili e con i prezzi più bassi in Europa (criterio 4). **Milano** scartata: sarebbe più vicina, ma va attivata a mano sull'account e i prezzi sono di solito un po' più alti (_da verificare_). La differenza nei tempi di risposta fra Milano e Francoforte è di una decina di millisecondi, che un utente non nota. |
+| Hosting dell'applicazione | **AWS Elastic Beanstalk** (piattaforma Node.js). Express serve anche il frontend React già compilato | EC2 gestita a mano; Lightsail; container (ECS) | Carico l'applicazione ed Elastic Beanstalk crea e gestisce da solo il server, i log e il monitoraggio, e se serve aggiunge altre istanze dietro un bilanciatore di carico. Ha molta documentazione per Node.js (criterio 3). Servire il frontend dalla stessa applicazione dà ai collaudatori un solo indirizzo, permette un solo rilascio e non richiede di configurare CORS. **EC2 a mano** scartata: installazione, aggiornamenti e configurazione del server sarebbero tutti a mio carico. **Lightsail** scartato: è semplice e costa poco, ma non aggiunge istanze da solo se il picco cresce (ASS-05). **Container** scartati: dovrei imparare Docker, una complessità che a un'applicazione sola non serve. |
+| Servizio database | **Amazon RDS for MySQL** | MySQL installato sul server dell'applicazione; Amazon Aurora | RDS fa da solo backup automatici, aggiornamenti e ripristino: un voto salvato non deve mai andare perso (vedi Profilo di carico). Tenere il database separato dall'applicazione permette di sostituire o raddoppiare il server senza toccare i dati. **MySQL sul server** scartato: backup e aggiornamenti sarebbero a mio carico, e se il server si rompe si perdono i dati. **Aurora** scartato: è compatibile con MySQL e più potente, ma costa di più, e per 400 utenti non serve. |
+| Archiviazione dei file | **Amazon S3**; i file passano dal backend | Disco del server; file nel database; link firmati di S3 | Il materiale e le consegne vanno su S3, che è fatto per conservare file, costa poco a GB e non perde i dati. Nel database si salvano solo nome e posizione di ogni file. I download passano dal backend, che controlla ogni volta i permessi: è ciò che blocca una verifica chiusa anche se lo studente usa un link diretto (FR-VER-02, FR-MAT-01). **Disco del server** scartato: i file si perderebbero sostituendo il server e non sarebbero condivisi fra due istanze. **File nel database** scartati: il database crescerebbe di centinaia di MB a ogni picco di consegne (NFR-13) e i backup diventerebbero lenti. **Link firmati** (link temporanei con cui S3 fa scaricare un file direttamente) scartati per ora: alleggerirebbero il server, ma un link resta valido per qualche minuto anche dopo la chiusura di una verifica. Li riconsidero se il picco delle consegne mettesse in difficoltà il server. |
+| Autenticazione | **Token JWT** generati dal backend; password salvate come hash con **bcrypt** | Amazon Cognito; sessioni salvate sul server | Al login il backend controlla la password e restituisce un token firmato che contiene l'identità e il ruolo dell'utente. Ogni richiesta successiva presenta il token, e il backend lo verifica senza dover ricordare chi è collegato: così qualunque istanza del server può rispondere a qualunque richiesta. Le password sono salvate solo come hash, quindi nessuno può rileggerle (FR-EST-01). **Cognito** scartato: gestirebbe utenti e password al posto mio, ma è un altro servizio da imparare, e le regole di ScuolaChill (credenziali generate dal Direttore in FR-EST-01, reset in FR-ACC-01) andrebbero adattate al suo funzionamento. **Sessioni sul server** scartate: con più istanze bisognerebbe condividerle fra i server. I dettagli sono nella sezione Sicurezza. |
+| Servizio esterno | **Amazon SES** (invio email), chiamato dal backend per le credenziali di primo accesso e il reset della password | Brevo (piano gratuito) | A settembre vanno creati fino a 900 account. I piani gratuiti dei servizi email hanno di solito un limite di poche centinaia di email al giorno (_da verificare_): l'invio delle credenziali richiederebbe giorni. SES si paga a consumo, circa 0,10 $ ogni 1.000 email (_da verificare_, criterio 4), e sta nello stesso account AWS. All'inizio SES funziona in modalità di prova e può inviare email solo a indirizzi verificati: l'uscita da questa modalità va richiesta ad AWS (DIP-01). Essendo una chiamata a un servizio esterno, può fallire: cosa succede in quel caso è definito in FR-EST-01. |
 
 ---
 
@@ -558,19 +580,48 @@ I numeri di qui devono essere coerenti con la scuola che avete immaginato e con 
 
 ### Diagramma dei componenti
 
-_Inserisci qui il diagramma. Deve mostrare i componenti principali e come comunicano._
+```mermaid
+flowchart LR
+    U["Browser<br/>PC o smartphone<br/>(app React)"] -- "HTTPS" --> LB["Bilanciatore di carico<br/>Elastic Beanstalk<br/>(certificato HTTPS)"]
+    LB --> APP
+    subgraph APP["Applicazione Node.js + Express (1 istanza, di più nei picchi)"]
+        direction TB
+        R["Routes + middleware<br/>token, ruoli, errori"] --> C["Controllers"]
+        C --> S["Services<br/>regole FR"]
+        S --> RP["Repositories"]
+        S --> I["Integrations"]
+    end
+    RP -- "query parametrizzate" --> DB[("Amazon RDS<br/>MySQL")]
+    I -- "file" --> S3[("Amazon S3<br/>materiale e consegne")]
+    I -- "email" --> SES["Amazon SES"]
+```
+
+**Come comunicano.**
+
+1. L'utente apre ScuolaChill dal browser. La prima volta scarica l'app React, che è servita dalla stessa applicazione Express.
+2. Ogni azione dell'utente diventa una chiamata HTTPS all'API (`/api/…`) e arriva al bilanciatore di carico. Il bilanciatore ha il certificato HTTPS, fornito gratis da AWS Certificate Manager, e smista le richieste fra le istanze dell'applicazione: di solito una, di più nei picchi.
+3. L'applicazione legge e scrive i dati su RDS, i file su S3, e invia le email con SES.
+4. Le istanze non conservano niente al loro interno: né file (stanno su S3), né sessioni (l'utente è riconosciuto dal token). Per questo se ne possono aggiungere o togliere senza perdere dati.
+5. Le email da inviare vengono salvate nel database con il loro stato, così la creazione di un account non deve aspettare SES. Un'attività periodica dell'applicazione invia quelle in attesa e riprova quelle non riuscite (FR-EST-01).
 
 ### I livelli
 
 | Livello                | Cosa fa in ScuolaChill | Esempio concreto |
 | ---------------------- | ---------------------- | ---------------- |
-| Presentation / API     | _…_                    | _…_              |
-| Application / Business | _…_                    | _…_              |
-| Data access            | _…_                    | _…_              |
+| Presentation / API     | Riceve le richieste HTTP, controlla token e ruolo, controlla che i dati in ingresso siano scritti nel formato giusto e restituisce le risposte con il codice HTTP corretto. Non contiene regole della scuola né query. Cartelle `routes/`, `controllers/`, `middleware/`. | `POST /api/verifiche/12/voti` con `{ "studenteId": 42, "voto": "6½" }`: il middleware risponde 401 se il token è scaduto; il controller risponde 400 se il voto è scritto "sei e mezzo". |
+| Application / Business | Contiene le regole di ScuolaChill: i requisiti FR e i controlli sui dati (i "✅ solo…" di "Chi può fare cosa"). Non sa niente di HTTP né di SQL. Cartella `services/`. | Il service dei voti controlla che la verifica sia del docente (DOC-03 AC-03), che lo studente segua la materia (FR-MAT-01) e che "6½" sia nella scala (FR-VOT-01). Poi converte "6½" in 6,5 per il calcolo delle medie. |
+| Data access            | Legge e scrive i dati: query parametrizzate su MySQL, file su S3, email con SES. Non prende decisioni. Cartelle `repositories/`, `integrations/`. | Il repository dei voti esegue `INSERT INTO voto (verifica_id, studente_id, valore) VALUES (?, ?, ?)`. L'integrazione dei file salva la foto di una consegna su S3 con un nome casuale. |
 
 ### Le dipendenze fra i livelli
 
-_Chi può conoscere chi, e in quale direzione. Spiega come questa struttura riduce l'accoppiamento e rende il sistema testabile._
+**La direzione è una sola:** Presentation → Business → Data access. Un livello conosce solo quello immediatamente sotto. Non si salta un livello (un controller non chiama mai un repository) e non si torna indietro (un service non sa cosa sia una richiesta HTTP).
+
+**Il livello Business non dipende dagli strumenti concreti.** Un service non importa direttamente la libreria di MySQL o quella di SES. Riceve dall'esterno gli oggetti che gli servono, per esempio un repository con un metodo `salva()` o un "inviatore di email" con un metodo `invia()`. Questi oggetti vengono creati e collegati in un solo punto, `app.js` (vedi Dependency inversion e IoC).
+
+**Cosa si guadagna.**
+
+- **Meno accoppiamento.** Se un giorno SES venisse sostituito da un altro servizio email, cambierebbe solo il file in `integrations/`. La logica di FR-EST-01 (tentativi, stato "email non consegnata") resta nel service e non va toccata. Lo stesso vale per il database.
+- **Più testabilità.** Nei test, al service si passa un repository finto che tiene i dati in memoria e un inviatore di email finto che si può far fallire apposta. Così si verificano le regole (es. FR-VOT-01, FR-EST-01) senza un database e senza inviare email vere.
 
 ---
 
@@ -606,11 +657,186 @@ _Elenca le risorse REST principali. Es. `/classi`, `/verifiche`, `/voti`._
 
 ### Diagramma ER
 
-_Inserisci qui il diagramma entità-relazioni con le cardinalità._
+```mermaid
+erDiagram
+    ANNO_SCOLASTICO ||--o{ CLASSE : comprende
+    CLASSE ||--o{ ISCRIZIONE : "ha come iscritti"
+    UTENTE ||--o{ ISCRIZIONE : "studente, una per anno"
+    UTENTE ||--o{ DOCENTE_MATERIA : "docente"
+    MATERIA ||--o{ DOCENTE_MATERIA : "insegnabile da"
+    CLASSE ||--o{ INSEGNAMENTO : "ha le materie"
+    MATERIA ||--o{ INSEGNAMENTO : "insegnata in"
+    UTENTE |o--o{ INSEGNAMENTO : "docente assegnato"
+    INSEGNAMENTO ||--o{ FREQUENZA_FACOLTATIVA : "se facoltativa"
+    UTENTE ||--o{ FREQUENZA_FACOLTATIVA : "studente che la segue"
+    INSEGNAMENTO ||--o{ MATERIALE : contiene
+    UTENTE ||--o{ MATERIALE : "caricato da"
+    MATERIALE ||--o| VERIFICA : "se è una verifica"
+    VERIFICA ||--o{ RIAPERTURA : "può essere riaperta"
+    UTENTE |o--o{ RIAPERTURA : "solo per uno studente"
+    VERIFICA ||--o{ CONSEGNA : riceve
+    UTENTE ||--o{ CONSEGNA : "consegnata da"
+    VERIFICA ||--o{ VOTO : "valutata con"
+    UTENTE ||--o{ VOTO : "studente valutato"
+    UTENTE ||--o{ VOTO : "docente che lo assegna"
+    UTENTE ||--o{ EMAIL_IN_USCITA : destinatario
+    UTENTE ||--o{ TOKEN_RESET : "chiede il reset"
+
+    UTENTE {
+        int id PK
+        string nome
+        string cognome
+        date data_nascita
+        string email UK
+        string password_hash
+        enum ruolo "DIRETTORE, DOCENTE, STUDENTE"
+        bool attivo
+        bool deve_cambiare_password
+    }
+    ANNO_SCOLASTICO {
+        int id PK
+        string nome "es. 2026/27"
+        bool in_corso
+    }
+    CLASSE {
+        int id PK
+        int anno_scolastico_id FK
+        int anno_corso "da 1 a 4"
+        string sezione "es. A"
+    }
+    ISCRIZIONE {
+        int id PK
+        int studente_id FK
+        int classe_id FK
+        int anno_scolastico_id FK
+    }
+    MATERIA {
+        int id PK
+        string nome UK
+        enum tipo_valutazione "VOTO o GIUDIZIO"
+    }
+    DOCENTE_MATERIA {
+        int docente_id PK, FK
+        int materia_id PK, FK
+    }
+    INSEGNAMENTO {
+        int id PK
+        int classe_id FK
+        int materia_id FK
+        int docente_id FK "può mancare"
+        bool facoltativa
+    }
+    FREQUENZA_FACOLTATIVA {
+        int insegnamento_id PK, FK
+        int studente_id PK, FK
+    }
+    MATERIALE {
+        int id PK
+        int insegnamento_id FK
+        int autore_id FK
+        string titolo
+        string nome_file
+        string chiave_s3 UK
+        datetime caricato_il
+    }
+    VERIFICA {
+        int materiale_id PK, FK
+        datetime apertura
+        datetime chiusura
+        bool con_consegna
+    }
+    RIAPERTURA {
+        int id PK
+        int verifica_id FK
+        int studente_id FK "vuoto = tutta la classe"
+        datetime fino_a
+        bool consente_consegna
+    }
+    CONSEGNA {
+        int id PK
+        int verifica_id FK
+        int studente_id FK
+        string nome_file
+        string chiave_s3 UK
+        datetime consegnata_il
+        bool in_riapertura
+    }
+    VOTO {
+        int id PK
+        int verifica_id FK
+        int studente_id FK
+        int docente_id FK
+        decimal valore "vuoto se giudizio"
+        enum giudizio "vuoto se voto"
+        datetime salvato_il
+    }
+    EMAIL_IN_USCITA {
+        int id PK
+        int utente_id FK
+        enum tipo "CREDENZIALI o RESET"
+        enum stato "IN_ATTESA, INVIATA, NON_CONSEGNATA"
+        int tentativi
+        datetime ultimo_tentativo
+    }
+    TOKEN_RESET {
+        int id PK
+        int utente_id FK
+        string token_hash UK
+        datetime scadenza
+        datetime usato_il
+    }
+```
+
+**Le entità.**
+
+| Entità | Cosa rappresenta |
+| ------ | ---------------- |
+| `UTENTE` | Direttore, docenti e studenti in un'unica tabella, distinti dal `ruolo`: hanno tutti gli stessi dati (NFR-12). `attivo = falso` per chi ha lasciato la scuola (FR-ANN-01); `deve_cambiare_password` obbliga a cambiarla al primo accesso (FR-EST-01). |
+| `ANNO_SCOLASTICO` | Uno solo è `in_corso`. Cambia solo con il passaggio al nuovo anno (FR-ANN-01); le classi degli anni non in corso sono archiviate e si possono solo leggere. |
+| `CLASSE` | Anno di corso + sezione, dentro un anno scolastico. Il nome "1A" non si salva: si compone da `anno_corso` e `sezione`. |
+| `ISCRIZIONE` | Lo studente in una classe, per un anno scolastico. Il trasferimento (FR-CLA-01) cambia la classe dell'iscrizione; voti e consegne restano collegati allo studente. |
+| `MATERIA` | L'elenco delle materie della scuola, creato dal Direttore, con il tipo di valutazione (FR-VOT-02). |
+| `DOCENTE_MATERIA` | Quali materie può insegnare ogni docente: serve a mostrare, accanto a una materia, solo i docenti che la insegnano (DIR-03). |
+| `INSEGNAMENTO` | Una materia in una classe, con il suo docente. È il collegamento centrale: un docente opera solo dove ha un insegnamento (DOC-01 AC-02). Il docente può mancare finché il Direttore non lo assegna. |
+| `FREQUENZA_FACOLTATIVA` | Gli studenti che seguono una materia facoltativa (FR-MAT-01). Per le materie non facoltative non serve: le segue tutta la classe. |
+| `MATERIALE` | Un file caricato da un docente per un insegnamento. `autore_id` serve per AC-03 di DOC-01: si può modificare solo il proprio materiale, anche se nel frattempo il docente della materia è cambiato. |
+| `VERIFICA` | Un materiale segnato come verifica, con i dati in più: apertura, chiusura, modalità (FR-VER-01, FR-VER-02). |
+| `RIAPERTURA` | Le riaperture decise dal docente: per tutta la classe (`studente_id` vuoto) o per un solo studente, con o senza consegna (FR-VER-02). |
+| `CONSEGNA` | L'elaborato caricato da uno studente. `in_riapertura` segnala le consegne arrivate dopo la chiusura originale (FR-VER-02). |
+| `VOTO` | Collega studente, verifica e docente, come chiede la traccia. Contiene un voto numerico **oppure** un giudizio, mai entrambi. |
+| `EMAIL_IN_USCITA` | Le email da inviare e il loro stato, per i tentativi automatici di FR-EST-01. Non contiene la password temporanea: viene generata nuova a ogni tentativo, e nel database se ne salva solo l'hash, in `UTENTE`. |
+| `TOKEN_RESET` | I link di reset della password (FR-ACC-01). Si salva solo l'hash del token, con scadenza a 30 minuti e data d'uso, così ogni link vale una volta sola. |
+
+**Come si salva un voto.** Si salva solo il valore numerico: 6+ diventa 6,25, 6½ diventa 6,5, 7− diventa 6,75 (FR-VOT-01). Ogni multiplo di 0,25 fra 1 e 10 corrisponde a un solo modo di scriverlo, quindi la scrittura "6½" si ricava dal numero e non va salvata. Le medie si calcolano direttamente sul numero.
+
+**Le regole che fa rispettare il database stesso.** Anche se il backend avesse un errore, il database rifiuta questi dati:
+
+| Vincolo | Regola che protegge |
+| ------- | ------------------- |
+| `email` unica in `UTENTE` | Nessun account con un'email già usata (DIR-01 AC-02) |
+| (`anno_scolastico_id`, `anno_corso`, `sezione`) unici in `CLASSE` | Niente due 1A nello stesso anno (DIR-03) |
+| (`studente_id`, `anno_scolastico_id`) unici in `ISCRIZIONE` | Uno studente sta in una sola classe per anno (FR-CLA-01) |
+| (`classe_id`, `materia_id`) unici in `INSEGNAMENTO` | Una materia compare una volta sola in una classe |
+| (`verifica_id`, `studente_id`) unici in `CONSEGNA` | Una sola consegna per verifica (STU-02 AC-02) |
+| (`verifica_id`, `studente_id`) unici in `VOTO` | Un solo voto per studente per verifica |
+| `valore` fra 1 e 10 e multiplo di 0,25; esattamente uno fra `valore` e `giudizio` | La scala dei voti (FR-VOT-01, FR-VOT-02, DOC-03 AC-02) |
+| `chiusura` successiva ad `apertura` in `VERIFICA` | Orari coerenti (scenario alternativo di DOC-02) |
+| Chiavi esterne su tutte le relazioni | Nessun voto, consegna o iscrizione che punti a qualcosa che non esiste |
+
+Le regole che il database non può esprimere da solo restano nei service. Per esempio: che `studente_id` indichi davvero un utente con ruolo Studente, che ci sia un solo anno `in_corso`, che le classi archiviate non si modifichino.
 
 ### Identificatori
 
-_Come vengono generati gli ID, e perché. Numeri incrementali, UUID, altro?_
+**La scelta.** Ogni tabella ha come chiave primaria un **numero intero progressivo generato da MySQL** (`AUTO_INCREMENT`): 1, 2, 3… L'ID è interno, non ha nessun significato e non cambia mai. Uno studente mantiene lo stesso ID anche se cambia classe (FR-CLA-01) o passa all'anno successivo (FR-ANN-01), e i suoi voti restano collegati a lui.
+
+**I file su S3** non usano il nome originale, ma un codice casuale (UUID): `materiali/7f3c9a2e-….pdf`. Il nome originale resta salvato nel database e viene mostrato all'utente. Così due docenti che caricano entrambi "verifica.pdf" non si sovrascrivono il file a vicenda.
+
+**Gli ID si possono indovinare?** Sì: chi vede l'ID 42 può provare con 43. Ma non ottiene nulla, perché il backend controlla a ogni richiesta che il dato appartenga a chi lo chiede (NFR-03, "Chi può fare cosa"). La protezione viene dal controllo dei permessi, non da ID difficili da indovinare.
+
+| Alternativa | Perché è scartata |
+| ----------- | ----------------- |
+| **UUID** per tutte le tabelle | Non si indovinano, ma questo non aggiunge sicurezza, dato che i permessi vengono comunque controllati. In MySQL occupano più spazio, rendono gli indici più lenti e sono scomodi da leggere quando si fanno prove con Postman. |
+| **Dati "naturali" come chiave** (email per gli utenti, nome per le classi) | L'email può cambiare, e "1A" si ripete ogni anno scolastico. Una chiave deve restare uguale per sempre. Email e nome della classe restano comunque **unici**: il database rifiuta due utenti con la stessa email (DIR-01 AC-02) e due classi con lo stesso nome nello stesso anno (DIR-03). |
 
 ### Tre modelli diversi
 
@@ -636,14 +862,50 @@ _Come si ottiene il token, cosa contiene, come viaggia il profilo utente._
 
 ### Chi può fare cosa
 
-| Operazione                    | Direttore | Docente | Studente |
-| ----------------------------- | --------- | ------- | -------- |
-| Creare un docente             | ✅        | ❌      | ❌       |
-| Caricare materiale            | ❌        | ✅      | ❌       |
-| Vedere i voti di uno studente | ❌        | ✅      | ✅       |
-| _…_                           |           |         |          |
+Ci sono due tipi di controllo. Il primo riguarda il **ruolo**: per esempio, solo il Direttore crea account. Il secondo riguarda i **dati**: un docente ha il permesso di caricare materiale, ma solo nelle classi e materie che gli sono assegnate. Nella tabella, "✅ solo…" indica un'operazione permessa al ruolo ma limitata a certi dati. Il backend deve controllare entrambe le cose a ogni richiesta.
 
-_Spiega dove viene fatto rispettare questo controllo. Ricorda che il frontend non basta mai._
+| Operazione                                                                        | Direttore          | Docente                                                                         | Studente                                                                 | Riferimento                               |
+| --------------------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------- |
+| **Account**                                                                       |                    |                                                                                 |                                                                          |                                           |
+| Creare un docente                                                                 | ✅                 | ❌                                                                              | ❌                                                                       | DIR-01 AC-03                              |
+| Creare uno studente                                                               | ✅                 | ❌                                                                              | ❌                                                                       | DIR-02 AC-03                              |
+| Modificare o disattivare un account                                               | ✅                 | ❌                                                                              | ❌                                                                       | DIR-01, DIR-02                            |
+| Reinviare l'email delle credenziali o generare nuove credenziali di primo accesso | ✅                 | ❌                                                                              | ❌                                                                       | FR-EST-01                                 |
+| Cambiare la propria password o reimpostarla se dimenticata                        | ✅                 | ✅                                                                              | ✅                                                                       | FR-ACC-01                                 |
+| **Classi e materie**                                                              |                    |                                                                                 |                                                                          |                                           |
+| Creare e modificare una classe, assegnare studenti e docenti per materia          | ✅                 | ❌                                                                              | ❌                                                                       | DIR-03                                    |
+| Trasferire uno studente in un'altra classe                                        | ✅                 | ❌                                                                              | ❌                                                                       | FR-CLA-01                                 |
+| Segnare una materia come facoltativa e scegliere chi la segue                     | ✅                 | ❌                                                                              | ❌                                                                       | FR-MAT-01                                 |
+| Creare le materie della scuola e scegliere se si valutano con voto o con giudizio | ✅ | ❌ | ❌ | DIR-03, FR-VOT-02 |
+| Avviare il passaggio al nuovo anno scolastico                                     | ✅                 | ❌                                                                              | ❌                                                                       | FR-ANN-01                                 |
+| Vedere gli studenti di una classe                                                 | ✅ tutte le classi | ✅ solo le classi in cui insegna (nelle materie facoltative, solo chi le segue) | ❌                                                                       | DIR-03, FR-MAT-01                         |
+| Vedere la panoramica della scuola                                                 | ✅                 | ❌                                                                              | ❌                                                                       | DIR-04 AC-03                              |
+| **Materiale didattico**                                                           |                    |                                                                                 |                                                                          |                                           |
+| Caricare materiale                                                                | ❌                 | ✅                                                                              | ❌                                                                       | DOC-01 AC-01, AC-02                       |
+| Modificare o eliminare materiale                                                  | ❌                 | ✅                                                                              | ❌                                                                       | DOC-01 AC-03                              |
+| Vedere e scaricare materiale                                                      | ✅ tutto           | ✅ solo nelle proprie classi e materie                                          | ✅ solo della propria classe, nelle materie che segue                    | STU-01 AC-01, AC-02, FR-MAT-01            |
+| **Verifiche**                                                                     |                    |                                                                                 |                                                                          |                                           |
+| Creare una verifica                                                               | ❌                 | ✅ solo nelle proprie classi e materie                                          | ❌                                                                       | DOC-02 AC-01                              |
+| Modificare, eliminare, spostare la chiusura o riaprire una verifica               | ❌                 | ✅ solo le proprie, con le regole di FR-VER-02 e FR-VER-03                      | ❌                                                                       | DOC-02 AC-02, AC-03                       |
+| Vedere una verifica nell'elenco (titolo e orari)                                  | ✅ tutte           | ✅ solo le proprie                                                              | ✅ solo della propria classe, nelle materie che segue                    | STU-02 AC-03, FR-MAT-01                   |
+| Aprire il file di una verifica                                                    | ✅ tutte           | ✅ solo le proprie                                                              | ✅ solo fra apertura e chiusura, o durante una riapertura                | FR-VER-02                                 |
+| Consegnare un elaborato                                                           | ❌                 | ❌                                                                              | ✅ solo nelle verifiche con consegna, mentre sono aperte, una volta sola | STU-02 AC-01, AC-02, FR-VER-01, FR-VER-02 |
+| Vedere le consegne                                                                | ✅ tutte           | ✅ solo quelle delle proprie verifiche                                          | ✅ solo la propria                                                       | FR-VER-01                                 |
+| **Voti**                                                                          |                    |                                                                                 |                                                                          |                                           |
+| Assegnare o modificare un voto o un giudizio                                      | ❌                 | ✅ solo nelle proprie verifiche, agli studenti che seguono la materia           | ❌                                                                       | DOC-03 AC-01, AC-03, FR-MAT-01            |
+| Vedere i voti di uno studente                                                     | ✅ tutti           | ✅ solo degli studenti delle proprie classi, nelle proprie materie              | ✅ solo i propri                                                         | STU-03 AC-02, DIR-04                      |
+| Vedere le medie                                                                   | ✅ tutte           | ✅ solo delle proprie classi e materie (per studente e per classe)              | ✅ solo le proprie                                                       | FR-VOT-03                                 |
+| **Archivio degli anni precedenti**                                                |                    |                                                                                 |                                                                          |                                           |
+| Consultare classi, materiale, verifiche e voti archiviati (sola lettura)          | ✅ tutto           | ✅ solo delle classi e materie in cui insegnava                                 | ✅ solo i propri voti                                                    | FR-ANN-01                                 |
+
+**Dove si controllano i permessi.** Sempre nel backend, a ogni richiesta, in quattro punti:
+
+1. **Il frontend nasconde soltanto.** Uno studente non vede il bottone "Carica materiale", ma questa non è una protezione: chiunque può chiamare le API direttamente, senza passare dalle pagine.
+2. **Primo controllo, sul ruolo.** Prima di ogni operazione, un middleware di Express (codice che viene eseguito prima di ogni route) verifica il token. Se manca, è scaduto o la firma non è valida, risponde **401** (non autenticato). Poi controlla che il ruolo nel token sia ammesso per quella route: se no, risponde **403** (vietato). Esempio: uno studente che chiama la creazione di un account riceve 403 (DIR-01 AC-03).
+3. **Secondo controllo, sui dati.** Dentro l'operazione, il livello delle regole (vedi Organizzazione del codice) verifica che quel dato sia accessibile a chi lo chiede. Per esempio: il docente insegna davvero in questa classe e in questa materia (DOC-01 AC-02)? La verifica è aperta per questo studente (FR-VER-02)? Se no, risponde **403**.
+4. **L'identità viene sempre dal token, mai dalla richiesta.** La pagina "I miei voti" usa l'ID dello studente contenuto nel token, non un ID scritto nel link. Così cambiare il link per vedere i voti di un compagno non funziona (STU-03 AC-02).
+
+Ogni riga della tabella con un ❌ o un "✅ solo…" ha almeno una richiesta nella collezione Postman, che verifica che il backend risponda 403 (NFR-03).
 
 ### L'API esterna
 
@@ -659,7 +921,50 @@ _Dove vivono connection string e segreti, e come cambiano fra Development e Prod
 
 ### Organizzazione del codice
 
-_Struttura di progetti, moduli e cartelle, con le motivazioni._
+Un solo repository con due cartelle, una per il backend e una per il frontend. Nel backend il codice è diviso **per livello**: ogni cartella ha un compito preciso e conosce solo il livello sotto di sé.
+
+```text
+scuolachill/
+├── backend/
+│   ├── src/
+│   │   ├── routes/         # le URL dell'API: per ogni route, chi può chiamarla e quale controller esegue
+│   │   ├── controllers/    # leggono e validano la richiesta, chiamano un service, restituiscono la risposta
+│   │   ├── services/       # le regole di ScuolaChill (FR-…) e i controlli sui dati
+│   │   ├── repositories/   # le query al database, sempre parametrizzate
+│   │   ├── integrations/   # i servizi esterni: S3 per i file, SES per le email
+│   │   ├── middleware/     # autenticazione, controllo del ruolo, gestione uniforme degli errori
+│   │   ├── config/         # configurazione per Development e Production, letta da variabili d'ambiente
+│   │   └── app.js          # crea l'applicazione Express e collega i pezzi
+│   ├── tests/
+│   └── openapi.yaml        # la documentazione dell'API (Swagger)
+└── frontend/
+    └── src/
+        ├── pages/          # una pagina per schermata (Panoramica, I miei voti, …)
+        ├── components/     # pezzi riutilizzabili (tabelle paginate, form, …)
+        └── api/            # le chiamate al backend, in un posto solo
+```
+
+**Un esempio: un docente assegna un voto (DOC-03).**
+
+1. La **route** `POST /api/verifiche/:id/voti` passa dal middleware, che controlla il token e il ruolo Docente.
+2. Il **controller** controlla che il voto sia scritto nel formato giusto (es. "6½").
+3. Il **service** applica le regole: la verifica è di questo docente (AC-03)? Lo studente segue la materia (FR-MAT-01)? Il voto è nella scala (FR-VOT-01)?
+4. Il **repository** salva il voto con una query parametrizzata.
+
+Se il service trova un problema, lancia un errore che il middleware degli errori trasforma in una risposta nel formato uniforme (NFR-06).
+
+**Perché così.**
+
+- **Ogni regola sta in un posto solo.** Le regole dei requisiti FR sono tutte nei service: per sapere dove si controlla FR-VER-02 basta guardare lì.
+- **I livelli dipendono solo da quello sotto**: route → controller → service → repository. Un service non sa niente di HTTP, e un controller non scrive query. Si può cambiare il modo di salvare i dati senza toccare le regole.
+- **Si può testare.** I service ricevono repository e integrazioni dall'esterno (vedi Dependency inversion), quindi nei test si possono sostituire con versioni finte, senza database né invio di email veri.
+- **Un solo repository** tiene insieme backend e frontend: una sola cronologia delle modifiche, e un rilascio unico (Express serve il frontend compilato, vedi Scelte tecnologiche).
+
+| Alternativa | Perché è scartata |
+| ----------- | ----------------- |
+| **Cartelle per funzionalità** (`classi/`, `verifiche/`, `voti/`, ognuna con route, controller, service e repository) | Funziona bene nei progetti grandi. Con 7–8 entità, però, le cartelle per livello restano piccole e rendono subito visibile la separazione a livelli che la traccia chiede. |
+| **Tutto nelle route** (query e regole dentro ogni route di Express) | È il modo più veloce per partire, ma regole, HTTP e database si mescolano: la stessa regola finisce copiata in più route, e non si può testare senza un database vero. |
+| **Due repository separati** per backend e frontend | Raddoppierebbe rilasci e configurazioni senza vantaggi, per un progetto sviluppato da una sola persona. |
 
 ### Dependency inversion e IoC
 
